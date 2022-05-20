@@ -3,6 +3,15 @@
 include:
   - wireguard.install
 
+wireguard_enable:
+  sysrc.managed:
+    - name: wireguard_enable
+{% if wireguard.enabled|default(True) %}
+    - value: "YES"
+{% else %}
+    - value: "NO"
+{% endif %}
+
 wireguard_conf_dir:
   file.directory:
     - name: {{ wireguard.conf_dir }}
@@ -10,3 +19,14 @@ wireguard_conf_dir:
     - group: wheel
     - mode: 750
     - makedirs: True
+    - require:
+      - pkg: wireguard_pkg
+
+{% for interface, config in wireguard.interfaces.items() %}
+
+wireguard_interface_{{ interface }}:
+  ini.options_present:
+    - separator: '='
+    - sections: {{ config.ini|yaml() }}
+
+{% endfor %}
