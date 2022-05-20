@@ -26,6 +26,7 @@ wireguard_conf_dir:
 
 wireguard_interface_{{ interface }}:
   ini.options_present:
+    - name: {{ wireguard.conf_dir | path_join(interface) ~ '.conf' }}
     - separator: '='
     - sections: {{ config.ini|yaml() }}
 
