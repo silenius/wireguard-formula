@@ -1,0 +1,5 @@
+{% import_yaml "wireguard/defaults.yaml" as defaults %}
+
+{% set wireguard = salt.pillar.get('wireguard') %}
+
+{% do wireguard.update(salt.slsutil.merge(defaults, wireguard.lookup)) %}
