@@ -33,20 +33,20 @@ wireguard_interface_{{ interface }}:
 {% if config.enabled|default(True) %}
 
 wireguard_interface_{{ interface }}_enabled:
-	cmd.run:
-		- name: sysrc wireguard_interfaces+={{ interface }}
-		- cmd: /tmp
-		- unless:
-			- sysrc -n wireguard_interfaces|egrep -q '(^|[[:space:]]){{ interface }}($|[[:space:]])'
+  cmd.run:
+    - name: sysrc wireguard_interfaces+={{ interface }}
+    - cmd: /tmp
+    - unless:
+      - sysrc -n wireguard_interfaces|egrep -q '(^|[[:space:]]){{ interface }}($|[[:space:]])'
 
 {% else %}
 
 wireguard_interface_{{ interface }}_enabled:
-	cmd.run:
-		- name: sysrc wireguard_interfaces-={{ interface }}
-		- cmd: /tmp
-		- onlyif:
-			- sysrc -n wireguard_interfaces|egrep -q '(^|[[:space:]]){{ interface }}($|[[:space:]])'
+  cmd.run:
+    - name: sysrc wireguard_interfaces-={{ interface }}
+    - cmd: /tmp
+    - onlyif:
+      - sysrc -n wireguard_interfaces|egrep -q '(^|[[:space:]]){{ interface }}($|[[:space:]])'
 
 {% endif %}
 
