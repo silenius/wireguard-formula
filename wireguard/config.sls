@@ -35,7 +35,7 @@ wireguard_interface_{{ interface }}:
 wireguard_interface_{{ interface }}_enabled:
   cmd.run:
     - name: sysrc wireguard_interfaces+={{ interface }}
-    - cmd: /tmp
+    - cwd: /tmp
     - unless:
       - sysrc -n wireguard_interfaces|egrep -q '(^|[[:space:]]){{ interface }}($|[[:space:]])'
 
@@ -44,7 +44,7 @@ wireguard_interface_{{ interface }}_enabled:
 wireguard_interface_{{ interface }}_enabled:
   cmd.run:
     - name: sysrc wireguard_interfaces-={{ interface }}
-    - cmd: /tmp
+    - cwd: /tmp
     - onlyif:
       - sysrc -n wireguard_interfaces|egrep -q '(^|[[:space:]]){{ interface }}($|[[:space:]])'
 
