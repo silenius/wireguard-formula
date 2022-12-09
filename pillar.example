@@ -1,0 +1,27 @@
+#!yaml|gpg
+
+wireguard:
+  lookup:
+    conf_dir: /override/path/etc/wireguard
+  interfaces:
+    wg_foo:
+      ini:
+        Interface:
+          PrivateKey: |
+            -----BEGIN PGP MESSAGE-----
+            (...) 
+            -----END PGP MESSAGE-----
+          Address: 10.198.76.1/32
+          ListenPort: 51820
+        Peer:
+          PublicKey: |
+            -----BEGIN PGP MESSAGE-----
+            (...)
+            -----END PGP MESSAGE-----
+          AllowedIPs: 10.198.76.2/32, 10.198.76.3/32, 10.198.76.4/32
+          PreSharedKey: | 
+            -----BEGIN PGP MESSAGE-----
+            (...)
+            -----END PGP MESSAGE-----
+          Endpoint: 1.2.3.4:51820
+          PersistentKeepalive: 25
